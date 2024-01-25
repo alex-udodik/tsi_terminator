@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.4.33403.182
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TSIgame Terminator", "TSIgame Terminator.csproj", "{720B531F-0148-4F6B-ACEA-9F9BF512EC7E}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{720B531F-0148-4F6B-ACEA-9F9BF512EC7E}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{720B531F-0148-4F6B-ACEA-9F9BF512EC7E}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{720B531F-0148-4F6B-ACEA-9F9BF512EC7E}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{720B531F-0148-4F6B-ACEA-9F9BF512EC7E}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {C72AAF5D-737D-4C06-8CB6-AAA33C173A37}
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,8 @@
+I:\GitHub\tsi_terminator\TSIgame Terminator\bin\Debug\TSIgame Terminator.exe.config
+I:\GitHub\tsi_terminator\TSIgame Terminator\bin\Debug\TSIgame Terminator.exe
+I:\GitHub\tsi_terminator\TSIgame Terminator\bin\Debug\TSIgame Terminator.pdb
+I:\GitHub\tsi_terminator\TSIgame Terminator\obj\Debug\TSIgame Terminator.csproj.AssemblyReference.cache
+I:\GitHub\tsi_terminator\TSIgame Terminator\obj\Debug\TSIgame Terminator.csproj.SuggestedBindingRedirects.cache
+I:\GitHub\tsi_terminator\TSIgame Terminator\obj\Debug\TSIgame Terminator.csproj.CoreCompileInputs.cache
+I:\GitHub\tsi_terminator\TSIgame Terminator\obj\Debug\TSIgame Terminator.exe
+I:\GitHub\tsi_terminator\TSIgame Terminator\obj\Debug\TSIgame Terminator.pdb
