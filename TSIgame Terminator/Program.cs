@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Diagnostics;
 using System.Net;
 using System.Security.Cryptography;
+using System.Threading;
 
 //created by shrimp.
 namespace TSIgame_Terminator
@@ -14,57 +15,89 @@ namespace TSIgame_Terminator
     {
         static void Main(string[] args)
         {
+            
+            bool isGameRunning = false;
 
-            var allProcesses = Process.GetProcesses();
-
-            List<Process> pubgProcesses = new List<Process>();
-            Process mainGame = null;
-            long mainGameMemSize = 0;
-
-            foreach (var process in allProcesses)
+            while (true)
             {
-                string procName = process.ProcessName.ToLower();
-                string tslgame = "TslGame".ToLower();
+                var allProcesses = Process.GetProcesses();
 
-                if (procName.Contains(tslgame) && !procName.Contains("BE".ToLower()))
+                List<Process> pubgProcesses = new List<Process>();
+                Process mainGame = null;
+                long mainGameMemSize = 0;
+
+
+                foreach (var process in allProcesses)
                 {
-                    
-                    string instanceName = GetProcessInstanceName(process.Id);
-                    if (instanceName == "")
+                    if (process.ProcessName.ToLower().Contains("tslgame"))
                     {
-                        continue;
+                        Console.WriteLine("Detected instance of PUBG running");
+                        isGameRunning= true;
+                        break;
                     }
-
-                    pubgProcesses.Add(process);
-                    long process_size = 0;
-                    var counter = new PerformanceCounter("Process", "Working Set - Private", instanceName, true);
-                    process_size = Convert.ToInt64(counter.NextValue()) / 1024;
-
-                    if (process_size > mainGameMemSize)
+                    else
                     {
-                        mainGameMemSize = process_size;
-                        mainGame = process;
-                    }
-
-
-                    Console.WriteLine(process.ProcessName + " " + process.Id + " " + process_size);
-                }
-            }
-
-            if (mainGame != null)
-            {
-                foreach (var process in pubgProcesses)
-                {
-                    if (process.Id != mainGame.Id)
-                    {
-                        var processToKill = Process.GetProcessById(process.Id);
-                        processToKill.Kill();
+                        //Console.WriteLine("No instance of PUBG running");
+                        isGameRunning = false;
                     }
                 }
+
+                if (isGameRunning)
+                {
+                    Console.WriteLine("Waiting for game to initialize");
+                    Thread.Sleep (30000);
+                    foreach (var process in allProcesses)
+                    {
+                        string procName = process.ProcessName.ToLower();
+                        string tslgame = "TslGame".ToLower();
+
+                        if (procName.Contains(tslgame) && !procName.Contains("BE".ToLower()))
+                        {
+
+                            string instanceName = GetProcessInstanceName(process.Id);
+                            if (instanceName == null || instanceName == "")
+                            {
+                                continue;
+                            }
+
+                            pubgProcesses.Add(process);
+                            long process_size = 0;
+                            var counter = new PerformanceCounter("Process", "Working Set - Private", instanceName, true);
+                            process_size = Convert.ToInt64(counter.NextValue()) / 1024;
+
+                            if (process_size > mainGameMemSize)
+                            {
+                                mainGameMemSize = process_size;
+                                mainGame = process;
+                            }
+
+
+                            Console.WriteLine(process.ProcessName + " " + process.Id + " " + process_size);
+                        }
+                    }
+
+                    if (mainGame != null)
+                    {
+                        foreach (var process in pubgProcesses)
+                        {
+                            if (process.Id != mainGame.Id)
+                            {
+                                var processToKill = Process.GetProcessById(process.Id);
+
+                                Console.WriteLine("Attempting to kill lower memory task(s) of tslgame");
+                                processToKill.Kill();
+                                Console.WriteLine("Killed: " + processToKill.ProcessName + " PID: ");
+                                Console.WriteLine("PID: " + processToKill.Id);
+
+                            }
+                        }
+                    }
+
+                    Console.WriteLine("Continuing scan");
+                }
+               
             }
             
-            Console.WriteLine("Finish");
-            Console.ReadKey();
         }
 
         public static string GetProcessInstanceName(int process_id)
