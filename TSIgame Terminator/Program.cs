@@ -15,7 +15,7 @@ namespace TSIgame_Terminator
     {
         static void Main(string[] args)
         {
-            
+            Console.WriteLine("Started. Silently running.");
             bool isGameRunning = false;
 
             while (true)
@@ -44,8 +44,7 @@ namespace TSIgame_Terminator
 
                 if (isGameRunning)
                 {
-                    Console.WriteLine("Waiting for game to initialize");
-                    Thread.Sleep (30000);
+                    Thread.Sleep (12000);
                     foreach (var process in allProcesses)
                     {
                         string procName = process.ProcessName.ToLower();
@@ -71,8 +70,9 @@ namespace TSIgame_Terminator
                                 mainGame = process;
                             }
 
-
-                            Console.WriteLine(process.ProcessName + " " + process.Id + " " + process_size);
+                            Console.WriteLine("Name: " + process.ProcessName);
+                            Console.WriteLine("PID " + process.Id);
+                            Console.WriteLine("Memory: " + process_size + "K");
                         }
                     }
 
@@ -86,16 +86,19 @@ namespace TSIgame_Terminator
 
                                 Console.WriteLine("Attempting to kill lower memory task(s) of tslgame");
                                 processToKill.Kill();
-                                Console.WriteLine("Killed: " + processToKill.ProcessName + " PID: ");
+                                Console.WriteLine("Killed: " + processToKill.ProcessName);
                                 Console.WriteLine("PID: " + processToKill.Id);
 
                             }
                         }
                     }
 
-                    Console.WriteLine("Continuing scan");
+                    
+                    
                 }
-               
+
+                isGameRunning = false;
+                Thread.Sleep(30000);
             }
             
         }
@@ -107,17 +110,24 @@ namespace TSIgame_Terminator
             
             foreach (string instance in instances)
             {
-                using (PerformanceCounter cnt = new PerformanceCounter("Process", "ID Process", instance, true))
+                try
                 {
-                    if (instance.ToLower().Contains("tslgame"))
+                    using (PerformanceCounter cnt = new PerformanceCounter("Process", "ID Process", instance, true))
                     {
-                        int val = (int)cnt.RawValue;
-                        if (val == process_id)
-                            return instance;
+                        if (instance.ToLower().Contains("tslgame"))
+                        {
+                            int val = (int)cnt.RawValue;
+                            if (val == process_id)
+                                return instance;
+                        }
                     }
+                } catch ( Exception e)
+                {
+                    Console.WriteLine(e.Message);
                 }
+                
             }
-            throw new Exception("Could not find performance counter.");
+            return "";
         }
     }
 }

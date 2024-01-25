@@ -7,7 +7,7 @@
     <ProjectGuid>{720B531F-0148-4F6B-ACEA-9F9BF512EC7E}</ProjectGuid>
     <OutputType>Exe</OutputType>
     <RootNamespace>TSIgame_Terminator</RootNamespace>
-    <AssemblyName>TSIgame Terminator</AssemblyName>
+    <AssemblyName>tsl_killer</AssemblyName>
     <TargetFrameworkVersion>v4.7.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
